@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class 잃어버린_괄호 {
+    //https://www.acmicpc.net/problem/1541
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
