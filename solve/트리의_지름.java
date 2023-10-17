@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class 트리의_지름 {
-    //https://www.acmicpc.net/problem/1167
+    //https://www.acmicpc.net/problem/1967
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
