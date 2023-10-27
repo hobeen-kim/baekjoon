@@ -1,5 +1,3 @@
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,86 +5,48 @@ import java.io.InputStreamReader;
 public class BOJ9935 {
 
     static char[] arr;
+    static char[] stack;
     static char[] boom;
+    static int pointer = 0;
+
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         arr = br.readLine().toCharArray();
         boom = br.readLine().toCharArray();
+        stack = new char[arr.length];
 
         for (int i = 0; i < arr.length; i++) {
 
-            boom(i);
+            stack[pointer++] = arr[i];
+
+            if(arr[i] == boom[boom.length - 1] && pointer >= boom.length) {
+                checkAndBoom();
+            }
         }
 
         StringBuilder sb = new StringBuilder();
 
-        for (char c : arr) {
-            if (c != 0) sb.append(c);
+        for (int i = 0; i < pointer; i++) {
+            sb.append(stack[i]);
         }
 
         if(sb.length() == 0) {
-            System.out.println("FLURA");
+            System.out.println("FRULA");
         } else {
             System.out.println(sb);
         }
+
     }
 
-    static void boom(int i) {
+    private static void checkAndBoom() {
 
-        if(arr[i] != boom[0]) return;
+        for (int i = 0; i < boom.length; i++) {
 
-        if(isBoom(i)) {
-
-            clear(i);
-
-            for (int j = 1; j < boom.length; j++) {
-                if(i - j >= 0) boom(i - j);
-            }
-        }
-    }
-
-    static boolean isBoom(int i) {
-
-        int count = 0;
-        int idx = i;
-        int boomIdx = 0;
-
-        while(count != boom.length) {
-
-            if(idx >= arr.length) break;
-
-            if(arr[idx] == boom[boomIdx]) {
-                idx++;
-                count++;
-                boomIdx++;
-            }else if(arr[idx] == 0) {
-                idx++;
-            }else {
-                break;
-            }
+            if(stack[pointer - i - 1] != boom[boom.length - i - 1]) return;
         }
 
-        return count == boom.length;
-    }
-
-    static void clear(int i) {
-
-        int count = 0;
-        int idx = i;
-        int boomIdx = 0;
-
-        while(count != boom.length) {
-
-            if(arr[idx] == boom[boomIdx]) {
-                arr[idx] = 0;
-                idx++;
-                count++;
-                boomIdx++;
-            }else {
-                idx++;
-            }
-        }
+        pointer -= boom.length;
     }
 }
